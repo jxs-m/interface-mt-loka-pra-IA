@@ -1,0 +1,602 @@
+/* ==========================================================================
+   CYBERLLM 32B // TERMINAL OPS CONSOLE — HACKER MATRIX & CYBERPUNK THEME
+   Compatível com Textual 8.x TCSS
+   ========================================================================== */
+
+Screen {
+    background: #060a10;
+    color: #dce8f5;
+}
+
+/* --- Barra Superior de Telemetria --- */
+#top-status-bar {
+    dock: top;
+    height: 3;
+    background: #09101a;
+    border-bottom: heavy #00ff9c;
+    padding: 0 2;
+    align: left middle;
+}
+
+#brand-title {
+    width: auto;
+    color: #00ff9c;
+    text-style: bold;
+    margin-right: 2;
+}
+
+#vllm-status-pill {
+    width: 1fr;
+    content-align: center middle;
+    color: #ffb000;
+    text-style: bold;
+}
+
+#vllm-status-pill.online {
+    color: #00ff9c;
+}
+
+#vllm-status-pill.offline {
+    color: #ff3366;
+}
+
+#telemetry-readout {
+    width: auto;
+    color: #00d4ff;
+    content-align: right middle;
+}
+
+/* --- Layout Principal (Sidebar + Workspace) --- */
+#main-shell {
+    width: 1fr;
+    height: 1fr;
+}
+
+#sidebar {
+    width: 32;
+    height: 1fr;
+    background: #080e17;
+    border-right: solid #17362b;
+    padding: 1 1;
+}
+
+#sidebar.hidden {
+    display: none;
+}
+
+.sidebar-heading {
+    color: #00ff9c;
+    text-style: bold;
+    margin-bottom: 1;
+    border-bottom: solid #17362b;
+}
+
+#session-actions-row {
+    height: auto;
+    margin-bottom: 1;
+}
+
+#session-actions-row Button {
+    min-width: 8;
+    width: 1fr;
+    margin-right: 1;
+}
+
+#session-list {
+    height: 1fr;
+    background: #0b131f;
+    border: solid #162838;
+    margin-bottom: 1;
+}
+
+#session-list > ListItem {
+    padding: 0 1;
+    color: #b7cce0;
+}
+
+#session-list > ListItem.--highlight {
+    background: #0f2922;
+    color: #00ff9c;
+    text-style: bold;
+}
+
+#toolchain-box {
+    height: auto;
+    background: #0b131f;
+    border: solid #162838;
+    padding: 1 1;
+    color: #8fa9c2;
+}
+
+/* --- Workspace e Abas --- */
+#workspace-tabs {
+    width: 1fr;
+    height: 1fr;
+    background: #060a10;
+}
+
+Tabs {
+    background: #080e17;
+    border-bottom: solid #17362b;
+}
+
+Tab {
+    color: #7c96b0;
+    padding: 0 2;
+}
+
+Tab.-active {
+    color: #00ff9c;
+    background: #0d1d1a;
+    text-style: bold;
+}
+
+Underline > .underline--bar {
+    color: #00ff9c;
+}
+
+TabPane {
+    padding: 1 1;
+    height: 1fr;
+}
+
+/* --- [F1] ABA DE CHAT SSE & CoT --- */
+#chat-scroll {
+    height: 1fr;
+    background: #070c14;
+    border: solid #142534;
+    padding: 1 1;
+    scrollbar-color: #00ff9c #0b131f;
+    scrollbar-size: 1 1;
+}
+
+#chat-welcome-banner {
+    background: #0b1420;
+    border: double #1b4d3e;
+    padding: 1 2;
+    margin-bottom: 1;
+    color: #b8d0e8;
+}
+
+.msg-card {
+    height: auto;
+    margin-bottom: 1;
+    padding: 1 2;
+    background: #0b121d;
+}
+
+.msg-user {
+    border-left: thick #00d4ff;
+    background: #0a1522;
+}
+
+.msg-assistant {
+    border-left: thick #00ff9c;
+    background: #0a131c;
+}
+
+.msg-header-user {
+    color: #00d4ff;
+    text-style: bold;
+    margin-bottom: 1;
+}
+
+.msg-header-assistant {
+    color: #00ff9c;
+    text-style: bold;
+    margin-bottom: 1;
+}
+
+/* Bloco Recolhível <think> ... </think> */
+.cot-collapsible {
+    background: #141006;
+    border: solid #664900;
+    border-left: thick #ffb000;
+    margin-bottom: 1;
+    padding: 0 1;
+}
+
+.cot-collapsible.hidden {
+    display: none;
+}
+
+.cot-collapsible CollapsibleTitle {
+    color: #ffb000;
+    text-style: bold;
+    background: #181307;
+}
+
+.cot-collapsible CollapsibleTitle:hover {
+    background: #241c09;
+    color: #ffd166;
+}
+
+.cot-body {
+    color: #e6c88a;
+    padding: 0 1 1 1;
+}
+
+.msg-markdown {
+    color: #e2ecf5;
+    margin: 0;
+}
+
+.code-actions-bar {
+    height: auto;
+    margin-top: 1;
+    padding-top: 1;
+    border-top: dashed #1a332b;
+}
+
+.code-actions-bar.hidden {
+    display: none;
+}
+
+.code-actions-bar Button {
+    margin-right: 1;
+    min-width: 14;
+}
+
+/* Gaveta de Código Anexado no Chat */
+#chat-code-drawer {
+    height: 11;
+    background: #0c1522;
+    border: solid #00d4ff;
+    padding: 0 1;
+    margin-top: 1;
+}
+
+#chat-code-drawer.hidden {
+    display: none;
+}
+
+#chat-code-drawer-header {
+    height: 1;
+    color: #00d4ff;
+    text-style: bold;
+}
+
+#chat-attached-editor {
+    height: 1fr;
+    background: #080d14;
+}
+
+/* Barra de Prompt Inferior */
+#chat-composer-bar {
+    height: 3;
+    margin-top: 1;
+    align: left middle;
+}
+
+#chat-prompt-input {
+    width: 1fr;
+    border: tall #00ff9c;
+    background: #0a121c;
+    color: #f0f7ff;
+    margin-right: 1;
+}
+
+#chat-prompt-input:focus {
+    border: tall #00d4ff;
+}
+
+#chat-hint-line {
+    height: 1;
+    color: #6b859e;
+    padding: 0 1;
+}
+
+/* --- [F2] BANCADA DE AUDITORIA SAST --- */
+#sast-toolbar {
+    height: 3;
+    margin-bottom: 1;
+    align: left middle;
+}
+
+#sast-filepath-input {
+    width: 1fr;
+    margin-right: 1;
+    background: #0a121c;
+    border: tall #1e3a4c;
+}
+
+#sast-lang-select {
+    width: 18;
+    margin-right: 1;
+}
+
+#sast-sample-select {
+    width: 28;
+    margin-right: 1;
+}
+
+#sast-split {
+    height: 1fr;
+}
+
+#sast-left-pane {
+    width: 1fr;
+    height: 1fr;
+    margin-right: 1;
+    background: #09101a;
+    border: solid #17362b;
+    padding: 0 1 1 1;
+}
+
+#sast-right-pane {
+    width: 1fr;
+    height: 1fr;
+    background: #09101a;
+    border: solid #183046;
+    padding: 0 1 1 1;
+}
+
+#sast-code-editor {
+    height: 1fr;
+    background: #060b11;
+    border: solid #152535;
+}
+
+#sast-action-bar {
+    height: 3;
+    margin-top: 1;
+    align: left middle;
+}
+
+#sast-action-bar Button {
+    margin-right: 1;
+}
+
+#sast-report-scroll {
+    height: 1fr;
+    background: #070c14;
+    padding: 1 1;
+}
+
+#sast-diff-log {
+    height: 1fr;
+    background: #060a10;
+    border: solid #142534;
+    padding: 1 1;
+}
+
+#sast-patch-status-bar {
+    height: auto;
+    padding: 0 1;
+    margin-bottom: 1;
+    color: #00ff9c;
+    text-style: bold;
+}
+
+/* --- [F3] COMPILADORES & VALIDADOR --- */
+#validator-split {
+    height: 1fr;
+}
+
+#validator-left {
+    width: 1fr;
+    height: 1fr;
+    margin-right: 1;
+    background: #09101a;
+    border: solid #17362b;
+    padding: 1 1;
+}
+
+#validator-right {
+    width: 1fr;
+    height: 1fr;
+    background: #09101a;
+    border: solid #183046;
+    padding: 1 1;
+}
+
+#validator-toolbar {
+    height: 3;
+    margin-bottom: 1;
+    align: left middle;
+}
+
+#validator-lang-select {
+    width: 26;
+    margin-right: 1;
+}
+
+#validator-code-editor {
+    height: 1fr;
+    background: #060b11;
+    border: solid #152535;
+}
+
+#validator-output-log {
+    height: 1fr;
+    background: #060a10;
+    border: solid #142534;
+    padding: 1 1;
+}
+
+/* --- [F4] TEMPLATES DE CIBERSEGURANÇA --- */
+#templates-split {
+    height: 1fr;
+}
+
+#templates-list-pane {
+    width: 42;
+    height: 1fr;
+    margin-right: 1;
+    background: #09101a;
+    border: solid #17362b;
+    padding: 1 1;
+}
+
+#templates-list {
+    height: 1fr;
+    background: #070d16;
+    border: solid #152535;
+}
+
+#templates-list > ListItem {
+    padding: 1 1;
+    border-bottom: solid #101e2c;
+}
+
+#templates-list > ListItem.--highlight {
+    background: #0f2922;
+    color: #00ff9c;
+    text-style: bold;
+}
+
+#templates-detail-pane {
+    width: 1fr;
+    height: 1fr;
+    background: #09101a;
+    border: solid #183046;
+    padding: 1 2;
+    overflow-y: auto;
+}
+
+#template-target-input {
+    margin: 1 0;
+    background: #060b11;
+    border: tall #00d4ff;
+}
+
+#template-preview-editor {
+    height: 1fr;
+    min-height: 10;
+    background: #060b11;
+    border: solid #152535;
+    margin-bottom: 1;
+}
+
+/* --- [F5] SERVIDOR vLLM & CONFIGURAÇÃO --- */
+#config-scroll {
+    height: 1fr;
+    padding: 1 2;
+    background: #080d16;
+    border: solid #17362b;
+    overflow-y: auto;
+}
+
+.config-grid {
+    layout: grid;
+    grid-size: 2;
+    grid-gutter: 1 2;
+    height: auto;
+    margin-bottom: 1;
+}
+
+.config-field {
+    height: auto;
+}
+
+.field-label {
+    color: #00ff9c;
+    text-style: bold;
+    margin-bottom: 0;
+}
+
+#cfg-system-prompt {
+    height: 7;
+    background: #060b11;
+    border: solid #1b3648;
+    margin-bottom: 1;
+}
+
+#config-actions-row {
+    height: 3;
+    margin: 1 0;
+}
+
+#config-actions-row Button {
+    margin-right: 1;
+}
+
+#vllm-guide-box {
+    background: #0b1420;
+    border: solid #1b3c4d;
+    padding: 1 2;
+    margin-top: 1;
+}
+
+/* --- Botões Padronizados Estilo Hacker --- */
+Button {
+    background: #102030;
+    color: #cde2f5;
+    border: tall #1d3b53;
+}
+
+Button:hover {
+    background: #173047;
+    color: #ffffff;
+}
+
+Button.btn-matrix {
+    background: #0a2e20;
+    color: #00ff9c;
+    border: tall #00c97b;
+    text-style: bold;
+}
+
+Button.btn-matrix:hover {
+    background: #104732;
+    color: #7affca;
+}
+
+Button.btn-cyan {
+    background: #0a2436;
+    color: #00d4ff;
+    border: tall #009ec2;
+    text-style: bold;
+}
+
+Button.btn-danger {
+    background: #330c18;
+    color: #ff4d79;
+    border: tall #b81d45;
+    text-style: bold;
+}
+
+Button.btn-amber {
+    background: #2e2006;
+    color: #ffb000;
+    border: tall #b37b00;
+    text-style: bold;
+}
+
+.section-title {
+    color: #00ff9c;
+    text-style: bold;
+    margin-bottom: 1;
+}
+
+.section-subtitle {
+    color: #00d4ff;
+    text-style: bold;
+    margin-bottom: 1;
+}
+
+/* --- Modal Seletor de Arquivos --- */
+FilePickerModal {
+    align: center middle;
+}
+
+#file-picker-dialog {
+    width: 82;
+    height: 28;
+    background: #09111c;
+    border: heavy #00ff9c;
+    padding: 1 2;
+}
+
+#file-picker-tree {
+    height: 1fr;
+    background: #060b12;
+    border: solid #183046;
+    margin: 1 0;
+}
+
+/* Rodapé Global */
+Footer {
+    background: #09101a;
+    color: #88a4bf;
+}

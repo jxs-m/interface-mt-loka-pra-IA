@@ -1,0 +1,37 @@
+# Ambientes virtuais Python
+.venv/
+venv/
+ENV/
+cyberllm_env/
+
+# Cache Python e Testes
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Dados locais, exports temporários e pesos de modelos
+exports/
+models/
+*.gguf
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.db
+*.sqlite3
+
+# Segredos e variáveis locais
+.env
+.env.*
+
+# Arquivos de sistema e editores
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.idea/
