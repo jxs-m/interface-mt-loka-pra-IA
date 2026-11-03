@@ -27,6 +27,7 @@ class HealthStatus:
     latency_ms: float = 0.0
     models: List[str] = field(default_factory=list)
     configured_model_present: bool = False
+    is_mock_simulator: bool = False
     error: str = ""
 
 
@@ -104,12 +105,24 @@ class VLLMClient:
                     for item in data
                     if isinstance(item, dict) and item.get("id")
                 ]
+
+                # Detecta se o endpoint é o mock_vllm_server.py local (sem IA real)
+                is_mock = False
+                root_url = base[:-3] if base.endswith("/v1") else base
+                try:
+                    h_resp = await client.get(f"{root_url}/health", timeout=1.5)
+                    if h_resp.status_code == 200 and "cyberllm-vllm-simulator" in h_resp.text:
+                        is_mock = True
+                except Exception:
+                    pass
+
                 return HealthStatus(
                     online=True,
                     api_base=base,
                     latency_ms=latency_ms,
                     models=models,
                     configured_model_present=(config.model in models) if models else True,
+                    is_mock_simulator=is_mock,
                 )
         except Exception as exc:
             latency_ms = (time.perf_counter() - t0) * 1000.0

@@ -622,8 +622,13 @@ class CyberLLMApp(App[None]):
 
     def _update_status_bar_health(self, status: HealthStatus) -> None:
         pill = self.query_one("#vllm-status-pill", Label)
-        pill.remove_class("online", "offline")
-        if status.online:
+        pill.remove_class("online", "offline", "mock")
+        if status.online and status.is_mock_simulator:
+            pill.add_class("mock")
+            pill.update(
+                f"⚠ SIMULADOR MOCK (SEM IA REAL) · {self.config_data.model} @ {status.api_base}"
+            )
+        elif status.online:
             pill.add_class("online")
             model_note = self.config_data.model
             if status.models and not status.configured_model_present:

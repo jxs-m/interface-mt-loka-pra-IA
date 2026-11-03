@@ -301,12 +301,45 @@ curl http://localhost:8000/v1/chat/completions \
 
 ---
 
-## 8. Estrutura de Arquivos no Repositório
+## 8. Acesso em Tempo Real à Internet (DuckDuckGo Search)
+
+O CyberLLM 32B pode consultar a internet em tempo real via **DuckDuckGo** (sem necessidade de chaves de API pagas) para auditar CVEs recentes, consultar novas RFCs e enriquecer suas respostas com fontes oficiais.
+
+### Opção A: Chat CLI com Internet Ativa
+Execute diretamente no terminal:
+```bash
+python3 web_chat.py
+```
+O script pesquisa no DuckDuckGo, extrai os links/snippets relevantes e injeta as informações dinamicamente no contexto do CyberLLM rodando no vLLM.
+
+### Opção B: Ativação no Open-WebUI
+Caso utilize a interface web Open-WebUI conectada ao vLLM:
+1. Acesse **Configurações de Administrador** ➔ **Web Search**.
+2. Ative o seletor **Enable Web Search**.
+3. Selecione o provedor **DuckDuckGo** (Search Engine).
+4. Em qualquer conversa, ative o botão de globo/busca na barra de digitação.
+
+### Opção C: Uso Programático em Python
+```python
+from src.web_search import search_duckduckgo, format_search_context
+
+# 1. Faz a busca em tempo real no DuckDuckGo
+results = search_duckduckgo("CVE-2024-6387 regreSSHion OpenSSH", max_results=3)
+
+# 2. Formata o contexto para o prompt da IA
+context = format_search_context("regreSSHion", results)
+print(context)
+```
+
+---
+
+## 9. Estrutura de Arquivos no Repositório
 
 ```text
 plano da ia super poderosa caseira/
 ├── README.md                                    <- Este documento de arquitetura e implantação
 ├── GUIA_EXECUCAO_GOOGLE_COLAB.md                <- Guia operacional com matrizes de hardware
+├── web_chat.py                                  <- CLI interativo com busca DuckDuckGo ao vivo
 ├── 01_colab_mineracao_e_aquisicao.ipynb         <- Notebook 01: Streaming e mineração dos 4 pilares
 ├── 02_colab_curadoria_validacao_cot.ipynb       <- Notebook 02: MinHash LSH, compiladores e CoT
 ├── 03_colab_treinamento_qlora.ipynb             <- Notebook 03: Treinamento BF16 LoRA no Qwen 32B
@@ -334,12 +367,13 @@ plano da ia super poderosa caseira/
     ├── validators.py
     ├── dedup.py
     ├── cot_generator.py
-    └── dataset_formatter.py
+    ├── dataset_formatter.py
+    └── web_search.py                            <- Módulo de busca DuckDuckGo em tempo real
 ```
 
 ---
 
-## 9. Licença e Uso Ético
+## 10. Licença e Uso Ético
 
 Este modelo é destinado exclusivamente para **pesquisa em segurança defensiva, auditoria autorizada de código-fonte, desenvolvimento de software seguro e proteção de infraestruturas críticas**. O uso deste artefato para propósitos maliciosos, exploração não autorizada ou violação de sistemas de terceiros é estritamente proibido.
 

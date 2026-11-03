@@ -73,6 +73,20 @@ async def _run_health_check(cfg) -> int:
     console = Console()
     client = VLLMClient()
     status = await client.check_health(cfg, timeout=5.0)
+    if status.online and status.is_mock_simulator:
+        models_txt = ", ".join(status.models) if status.models else "(nenhum listado)"
+        console.print(
+            Panel(
+                f"[bold yellow]⚠ SERVIDOR DE SIMULAÇÃO MOCK DETECTADO (SEM IA REAL)[/]\n"
+                f"Endpoint: [cyan]{status.api_base}[/]\n"
+                f"Modelo:   [bold]{models_txt}[/]\n\n"
+                f"[yellow]O processo `mock_vllm_server.py` está respondendo na porta 8000 com textos fixos de teste.\n"
+                f"Para respostas reais da sua IA 32B, conecte ao vLLM real (Colab/VM) na aba F5![/]",
+                title="🛡️ CyberLLM Health Probe",
+                border_style="yellow",
+            )
+        )
+        return 0
     if status.online:
         models_txt = ", ".join(status.models) if status.models else "(nenhum listado)"
         console.print(
